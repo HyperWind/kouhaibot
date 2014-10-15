@@ -161,8 +161,7 @@ class kouhai_bot(ch.RoomManager):
           self.setTimeout(i * 2, room.message, msg)
 
       elif cmd == "insult":
-        response = insults[randint(0, len(insults)-1)].split("@")
-        room.message(response[0] + args + response[1])
+        room.message(getMessage("insults", args))
 
       elif cmd == "flip":
         room.message("*does a flip*")
@@ -181,12 +180,10 @@ class kouhai_bot(ch.RoomManager):
           room.message(" No, that's not true at all!")
 
       elif cmd == "yandere":
-        response = yandere[randint(0, len(yandere)-1)].split("@")
-        room.message(" http://i.imgur.com/0FCWZSQ.png " + response[0] + args + response[1])
+        room.message(" http://i.imgur.com/0FCWZSQ.png " + getMessage("yandere", args))
 
       elif cmd == "tsundere":
-        response = tsundere[randint(0, len(tsundere)-1)].split("@")
-        room.message(" http://i.imgur.com/UZmxhc4.png " + response[0] + args + response[1])
+        room.message(" http://i.imgur.com/UZmxhc4.png " + getMessage("tsundere", args))
 
       elif cmd == "weeaboo":
         room.message(" https://www.youtube.com/watch?v=TBfWKmRFTjM This song discribes you pretty accurately " + args + " .")
@@ -208,8 +205,7 @@ class kouhai_bot(ch.RoomManager):
         room.message("Thanks @" + user.name + " sempai, that was delicious.")
 
       elif cmd == "kill":
-        response = killme[randint(0, len(killme)-1)].split("@")
-        room.message("*" + response[0] + args + response[1] + "*")
+        room.message("*" + getMessage("killme", args) + "*")
 
       elif cmd == "rape":
         room.message("Come here " + args + " !")
@@ -235,6 +231,10 @@ class kouhai_bot(ch.RoomManager):
 
   def onMessageDelete(self, room, user, msg):
     print("MESSAGE DELETED: " + user.name + ": " + msg.body)
+
+  def getMessage(list, name):
+    message = globals()[list][randint(0, len(globals()[list])-1)].split("@")
+    return message[0] + name + message[1]
 
 
 if __name__ == "__main__": kouhai_bot.easy_start()
