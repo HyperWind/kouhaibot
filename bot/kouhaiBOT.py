@@ -112,6 +112,7 @@ class kouhai_bot(ch.RoomManager):
 
   def onDisconnect(self, room):
     print("Disconnected")
+    room.message("Minna, sayonara!")
 
   def onMessage(self, room, user, message):
 
