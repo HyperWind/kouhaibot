@@ -165,7 +165,7 @@ class kouhai_bot(ch.RoomManager):
           self.setTimeout(i * 2, room.message, msg)
 
       elif cmd == "insult":
-        room.message(getMessage("insults", args))
+        room.message(self.getMessage("insults", args))
 
       elif cmd == "flip":
         room.message("*does a flip*")
@@ -184,10 +184,10 @@ class kouhai_bot(ch.RoomManager):
           room.message(" No, that's not true at all!")
 
       elif cmd == "yandere":
-        room.message(" http://i.imgur.com/0FCWZSQ.png " + getMessage("yandere", args))
+        room.message(" http://i.imgur.com/0FCWZSQ.png " + self.getMessage("yandere", args))
 
       elif cmd == "tsundere":
-        room.message(" http://i.imgur.com/UZmxhc4.png " + getMessage("tsundere", args))
+        room.message(" http://i.imgur.com/UZmxhc4.png " + self.getMessage("tsundere", args))
 
       elif cmd == "weeaboo":
         room.message(" https://www.youtube.com/watch?v=TBfWKmRFTjM This song discribes you pretty accurately " + args + " .")
@@ -209,7 +209,7 @@ class kouhai_bot(ch.RoomManager):
         room.message("Thanks @" + user.name + " sempai, that was delicious.")
 
       elif cmd == "kill":
-        room.message("*" + getMessage("killme", args) + "*")
+        room.message("*" + self.getMessage("killme", args) + "*")
 
       elif cmd == "rape":
         room.message("Come here " + args + " !")
