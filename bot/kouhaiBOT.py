@@ -113,6 +113,10 @@ class kouhai_bot(ch.RoomManager):
   def onDisconnect(self, room):
     print("Disconnected")
 
+  def getMessage(self, responses, name):
+    message = globals()[responses][randint(0, len(globals()[responses])-1)].split("@")
+    return message[0] + name + message[1]
+
   def onMessage(self, room, user, message):
 
     long_c = 0
@@ -231,10 +235,5 @@ class kouhai_bot(ch.RoomManager):
 
   def onMessageDelete(self, room, user, msg):
     print("MESSAGE DELETED: " + user.name + ": " + msg.body)
-
-  def getMessage(list, name):
-    message = globals()[list][randint(0, len(globals()[list])-1)].split("@")
-    return message[0] + name + message[1]
-
 
 if __name__ == "__main__": kouhai_bot.easy_start()
