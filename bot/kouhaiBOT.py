@@ -11,6 +11,18 @@ if sys.version_info[0] > 2:
 else:
   import urllib2 as urlreq
 
+
+killme = [
+  "Stabs @ in the eye.",
+  "Bites @ 's arm off.",
+  "Goes full on tsundere on @ .",
+  "Shoots an arrow in @ 's knee.",
+  "Shoots @ in the foot.",
+  "Makes a hamburger out of @ .",
+  "Makes @ learn C++.",
+  "Eats @ 's heart."
+]
+
 dancemoves = [
   "(>^.^)>",
   "(v^.^)v",
@@ -19,15 +31,15 @@ dancemoves = [
 ]
 
 flips = [
-  "*Hits her head.*",
-  "*Slips and falls down.*",
-  "*Fails and makes a baka out of herself.*",
-  "*Sneezes and falls down.*",
-  "*Actually pulls off the flip.*",
-  "*Accidentally hits someone with her leg.*",
-  "*Makes a #JeanFail.*",
-  "*Gets ebola.*",
-  "*Falls down the stairs.*"
+  "Hits her head.",
+  "Slips and falls down.",
+  "Fails and makes a baka out of herself.",
+  "Sneezes and falls down.",
+  "Actually pulls off the flip.",
+  "Accidentally hits someone with her leg.",
+  "Makes a #JeanFail.",
+  "Gets ebola.",
+  "Falls down the stairs."
 ]
 
 sempai = [
@@ -74,10 +86,10 @@ insults = [
 ]
 
 lewd = [
-  "S-sempai, what are you doing? Why are you holding me like that?",
-  "No, s-sempai, please, s-stop...No, d-don't remove that s-sempai...",
-  "What are you doing s-sempai, why are you putting it in there?",
-  "S-SEMPAI!!! HNNNNNNGGGG!! S-ssem-mpai..."
+  " S-sempai, what are you doing? Why are you holding me like that?",
+  " No, s-sempai, please, s-stop...No, d-don't remove that s-sempai...",
+  " What are you doing s-sempai, why are you putting it in there?",
+  " S-SEMPAI!!! HNNNNNNGGGG!! S-ssem-mpai..."
 ]
 
 last_time = 0
@@ -122,14 +134,6 @@ class kouhai_bot(ch.RoomManager):
       else:
         cmd, args = data[0], ""
 
-    #try:
-    #    print("/" + cmd + " " + args)
-    #except:
-    #    print("Input error!")
-    #    room.message("I don't understand that.")
-    #    cmd = "commands"
-    #else:
-
       if cmd == "say":
         room.message(args)
 
@@ -157,13 +161,12 @@ class kouhai_bot(ch.RoomManager):
           self.setTimeout(i * 2, room.message, msg)
 
       elif cmd == "insult":
-        i_message = insults[randint(0, len(insults)-1)]
-        i2_message = i_message.split("@")
-        room.message(i2_message[0] + args + i2_message[1])
+        response = insults[randint(0, len(insults)-1)].split("@")
+        room.message(response[0] + args + response[1])
 
       elif cmd == "flip":
         room.message("*does a flip*")
-        self.setTimeout(2, room.message, flips[randint(0, len(flips)-1)])
+        self.setTimeout(2, room.message, "*" + flips[randint(0, len(flips)-1)] + "*")
 
       elif cmd == "baka":
         room.message(" No, you are @" + user.name + " .")
@@ -178,20 +181,18 @@ class kouhai_bot(ch.RoomManager):
           room.message(" No, that's not true at all!")
 
       elif cmd == "yandere":
-        i_message = yandere[randint(0, len(yandere)-1)]
-        response = i_message.split("@")
+        response = yandere[randint(0, len(yandere)-1)].split("@")
         room.message(" http://i.imgur.com/0FCWZSQ.png " + response[0] + args + response[1])
 
       elif cmd == "tsundere":
-        i_message = tsundere[randint(0, len(tsundere)-1)]
-        response = i_message.split("@")
+        response = tsundere[randint(0, len(tsundere)-1)].split("@")
         room.message(" http://i.imgur.com/UZmxhc4.png " + response[0] + args + response[1])
 
       elif cmd == "weeaboo":
         room.message(" https://www.youtube.com/watch?v=TBfWKmRFTjM This song discribes you pretty accurately " + args + " .")
 
       elif cmd == "commands":
-        room.message("> /commands, /cookie, /weeaboo (arg), /users, /tsundere (arg), /notice, /yandere (arg), /true? (arg), /intro, /flip, /insult (arg), /baka, /lewd, /dance, /roulette, /scrub, /mods. <")
+        room.message("> /commands, /cookie, /weeaboo (arg), /rape (arg), /users, /tsundere (arg), /kill (arg), /notice, /yandere (arg), /true? (arg), /intro, /flip, /insult (arg), /baka, /lewd, /dance, /roulette, /scrub, /mods. <")
 
       elif cmd == "roulette":
         if randint(1, 100) < 25:
@@ -206,9 +207,13 @@ class kouhai_bot(ch.RoomManager):
       elif cmd == "cookie":
         room.message("Thanks @" + user.name + " sempai, that was delicious.")
 
-      ## Todo: 
-        #make /kill (arg), /rape (arg);
-        #make a github for this shit.
+      elif cmd == "kill":
+        response = killme[randint(0, len(killme)-1)].split("@")
+        room.message("*" + response[0] + args + response[1] + "*")
+
+      elif cmd == "rape":
+        room.message("Come here " + args + " !")
+        self.setTimeout(2, room.message, "*Rapes " + args + " .*")
 
       else:
         room.message("I don't know that command!")
