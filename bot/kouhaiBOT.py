@@ -11,86 +11,96 @@ if sys.version_info[0] > 2:
 else:
   import urllib2 as urlreq
 
+  """
+  todo:
+  --
+  maybe:
+  Make the bot replace all outgoing swearwords with cuter alternatives
 
-killme = [
-  "Stabs @ in the eye.",
-  "Bites @ 's arm off.",
-  "Goes full on tsundere on @ .",
-  "Shoots an arrow in @ 's knee.",
-  "Shoots @ in the foot.",
-  "Makes a hamburger out of @ .",
-  "Makes @ learn x86 Assembler.",
-  "Eats @ 's heart."
-]
+  """
+messages = {
 
-dancemoves = [
-  "(>^.^)>",
-  "(v^.^)v",
-  "v(^.^v)",
-  "<(^.^<)"
-]
+  "killme": [
+    "Stabs @ in the eye.",
+    "Bites @ 's arm off.",
+    "Goes full on tsundere on @ .",
+    "Shoots an arrow in @ 's knee.",
+    "Shoots @ in the foot.",
+    "Makes a hamburger out of @ .",
+    "Makes @ learn x86 Assembler.",
+    "Eats @ 's heart."
+  ],
 
-flips = [
-  "Hits her head.",
-  "Slips and falls down.",
-  "Fails and makes a baka out of herself.",
-  "Sneezes and falls down.",
-  "Actually pulls off the flip.",
-  "Accidentally hits someone with her leg.",
-  "Makes a #JeanFail.",
-  "Gets ebola.",
-  "Falls down the stairs."
-]
+  "dancemoves": [
+    "(>^.^)>",
+    "(v^.^)v",
+    "v(^.^v)",
+    "<(^.^<)"
+  ],
 
-sempai = [
-  "blushes",
-  "passes out",
-  "goes full on fujoshi",
-  "freaks out",
-  "does nothing",
-  "writes a yaoi fanfic about that"
-]
+  "flips": [
+    "Hits her head.",
+    "Slips and falls down.",
+    "Fails and makes a baka out of herself.",
+    "Sneezes and falls down.",
+    "Actually pulls off the flip.",
+    "Accidentally hits someone with her leg.",
+    "Makes a #JeanFail.",
+    "Gets ebola.",
+    "Falls down the stairs."
+  ],
 
-yandere = [
-  " Oh @ where are you?",
-  " @ , come out~!",
-  " @ , I want to play with you...",
-  " You are the only one I love @ .",
-  " I want only you @ .",
-  " My love for you is infinate @ .",
-  " Please, why don't you love me @ ?"
-]
+  "sempai": [
+    "blushes",
+    "passes out",
+    "goes full on fujoshi",
+    "freaks out",
+    "does nothing",
+    "writes a yaoi fanfic about that"
+  ],
 
-tsundere = [
-  " Baka! @",
-  " It's not like I like you or anything @ ...",
-  " Hmpf... @",
-  " I hate you @ !",
-  " Get away @ !",
-  " Piss off @ !",
-  " I don't like you @ !"
-]
+  "yandere": [
+    " Oh @ where are you?",
+    " @ , come out~!",
+    " @ , I want to play with you...",
+    " You are the only one I love @ .",
+    " I want only you @ .",
+    " My love for you is infinate @ .",
+    " Please, why don't you love me @ ?"
+  ],
 
-insults = [
-  " @ smells like poo.",
-  " If @ was in an eroge, their face would be censored.",
-  " I would rather eat a bug than look at @ 's face.",
-  " Even Kirito-kun wouldn't accept @ into his harem.",
-  " I once saw @ 's face, now I'm blind.",
-  " @ is a baka gaijin!",
-  " @ is so boring that I'd rather watch Vampire Knight than talk to them.",
-  " @ 's mama is so fat, she even has her own gravity field.",
-  " Captain Earth makes more sense than @.",
-  " @ enjoyed Boku no Pico way too much.",
-  " @ has such shit taste that they have Mars of Destruction on their favorites list."
-]
+  "tsundere": [
+    " Baka! @",
+    " It's not like I like you or anything @ ...",
+    " Hmpf... @",
+    " I hate you @ !",
+    " Get away @ !",
+    " Piss off @ !",
+    " I don't like you @ !"
+  ],
 
-lewd = [
-  " S-sempai, what are you doing? Why are you holding me like that?",
-  " No, s-sempai, please, s-stop...No, d-don't remove that s-sempai...",
-  " What are you doing s-sempai, why are you putting it in there?",
-  " S-SEMPAI!!! HNNNNNNGGGG!! S-ssem-mpai..."
-]
+  "insults": [
+    " @ smells like poo.",
+    " If @ was in an eroge, their face would be censored.",
+    " I would rather eat a bug than look at @ 's face.",
+    " Even Kirito-kun wouldn't accept @ into his harem.",
+    " I once saw @ 's face, now I'm blind.",
+    " @ is a baka gaijin!",
+    " @ is so boring that I'd rather watch Vampire Knight than talk to them.",
+    " @ 's mama is so fat, she even has her own gravity field.",
+    " Captain Earth makes more sense than @.",
+    " @ enjoyed Boku no Pico way too much.",
+    " @ has such shit taste that they have Mars of Destruction on their favorites list."
+  ],
+
+  "lewd": [
+    " S-sempai, what are you doing? Why are you holding me like that?",
+    " No, s-sempai, please, s-stop...No, d-don't remove that s-sempai...",
+    " What are you doing s-sempai, why are you putting it in there?",
+    " S-SEMPAI!!! HNNNNNNGGGG!! S-ssem-mpai..."
+  ]
+
+}
 
 last_time = 0
 
@@ -114,23 +124,19 @@ class kouhai_bot(ch.RoomManager):
     print("Disconnected")
 
   def getMessage(self, responses, name):
-    message = globals()[responses][randint(0, len(globals()[responses])-1)].split("@")
+    message = messages[responses][randint(0, len(messages[responses])-1)].split("@")
     return message[0] + name + message[1]
 
   def onMessage(self, room, user, message):
 
     long_c = 0
 
-    if room.getLevel(self.user) > 0:
-      print(user.name, message.body)
-    else:
-      print(user.name, message.body)
+    last_time = 0
+
+    print(user.name, message.body, "Spam filter: ", time.time() - last_time)
 
     if self.user == user: return
 
-    global last_time
-
-    print(time.time(), " ", last_time, " ", time.time() - last_time)
     if (message.body[0] == "/" and time.time() - last_time > 2):   ##Here is the Prefix part
       data = message.body[1:].split(" ", 1)
       if len(data) > 1:
@@ -138,8 +144,13 @@ class kouhai_bot(ch.RoomManager):
       else:
         cmd, args = data[0], ""
 
+      if args == "me": args = "@" + user.name
+
       if cmd == "say":
-        room.message(args)
+        if args == "adult japanese visual novels":
+          room.message("HENTAI GAMES!")
+        else:
+          room.message(args)
 
       elif cmd == "scrub":
         room.message( "@" + random.choice(room.usernames) + " is a scrub.")
@@ -155,21 +166,21 @@ class kouhai_bot(ch.RoomManager):
       elif cmd == "dance":
         last_time = time.time() + 8
         long_c = 1
-        for i, msg in enumerate(dancemoves):
-          self.setTimeout(i * 2, room.message, msg)
+        for msg in range(0, len(messages["dancemoves"])):
+          self.setTimeout(msg * 2, room.message, messages["dancemoves"][msg])
 
       elif cmd == "lewd":
         last_time = time.time() + 8
         long_c = 1
-        for i, msg in enumerate(lewd):
-          self.setTimeout(i * 2, room.message, msg)
+        for msg in range(0, len(messages["lewd"])):
+          self.setTimeout(msg * 2, room.message, messages["lewd"][msg])
 
       elif cmd == "insult":
         room.message(self.getMessage("insults", args))
 
       elif cmd == "flip":
         room.message("*does a flip*")
-        self.setTimeout(2, room.message, "*" + flips[randint(0, len(flips)-1)] + "*")
+        self.setTimeout(2, room.message, "*" + messages["flips"][randint(0, len(messages["flips"])-1)] + "*")
 
       elif cmd == "baka":
         room.message(" No, you are @" + user.name + " .")
@@ -203,7 +214,7 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "notice":
         room.message("@" + user.name + " sempai notices @kouhaiBOT.")
-        self.setTimeout(2, room.message, "*@kouhaiBOT " + sempai[randint(0, len(sempai)-1)] + "*")
+        self.setTimeout(2, room.message, "*@kouhaiBOT " + messages["sempai"][randint(0, len(messages["sempai"])-1)] + "*")
 
       elif cmd == "cookie":
         room.message("Thanks @" + user.name + " sempai, that was delicious.")
@@ -212,8 +223,8 @@ class kouhai_bot(ch.RoomManager):
         room.message("*" + self.getMessage("killme", args) + "*")
 
       elif cmd == "rape":
-        room.message("Come here " + args + " !")
-        self.setTimeout(2, room.message, "*Rapes " + args + " .*")
+        #room.message("Come here " + args + " !")
+        self.setTimeout(1, room.message, "*Rapes " + args + " .*")
 
       else:
         room.message("I don't know that command!")
