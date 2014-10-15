@@ -1,4 +1,4 @@
-kouhaibot
+Kouhaibot
 =========
 
-kouhaiBOT
+A chatango chat bot that resides in http://hummingbirdtempchat.chatango.com/
