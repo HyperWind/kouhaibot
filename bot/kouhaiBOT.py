@@ -19,7 +19,7 @@ killme = [
   "Shoots an arrow in @ 's knee.",
   "Shoots @ in the foot.",
   "Makes a hamburger out of @ .",
-  "Makes @ learn C++.",
+  "Makes @ learn x86 Assembler.",
   "Eats @ 's heart."
 ]
 
