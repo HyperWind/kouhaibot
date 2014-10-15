@@ -129,9 +129,9 @@ class kouhai_bot(ch.RoomManager):
 
   def onMessage(self, room, user, message):
 
-    long_c = 0
+    long_c = False
 
-    last_time = 0
+    global last_time
 
     print(user.name, message.body, "Spam filter: ", time.time() - last_time)
 
@@ -143,6 +143,8 @@ class kouhai_bot(ch.RoomManager):
         cmd, args = data[0], data[1]
       else:
         cmd, args = data[0], ""
+
+      cmd = cmd.lower()
 
       if args == "me": args = "@" + user.name
 
@@ -165,13 +167,13 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "dance":
         last_time = time.time() + 8
-        long_c = 1
+        long_c = True
         for msg in range(0, len(messages["dancemoves"])):
           self.setTimeout(msg * 2, room.message, messages["dancemoves"][msg])
 
       elif cmd == "lewd":
         last_time = time.time() + 8
-        long_c = 1
+        long_c = True
         for msg in range(0, len(messages["lewd"])):
           self.setTimeout(msg * 2, room.message, messages["lewd"][msg])
 
@@ -204,7 +206,7 @@ class kouhai_bot(ch.RoomManager):
         room.message(" https://www.youtube.com/watch?v=TBfWKmRFTjM This song discribes you pretty accurately " + args + " .")
 
       elif cmd == "commands":
-        room.message("> /commands, /cookie, /weeaboo (arg), /rape (arg), /users, /tsundere (arg), /kill (arg), /notice, /yandere (arg), /true? (arg), /intro, /flip, /insult (arg), /baka, /lewd, /dance, /roulette, /scrub, /mods. <")
+        room.message("> /weeaboo (arg), /rape (arg), /tsundere (arg), /yt (arg), /google (arg), /hb (arg), /kill (arg), /yandere (arg), /true? (arg), /insult (arg), /notice, /users, /intro, /flip, /baka, /lewd, /dance, /roulette, /scrub, /mods, /commands, /cookie. <")
 
       elif cmd == "roulette":
         if randint(1, 100) < 25:
@@ -226,11 +228,32 @@ class kouhai_bot(ch.RoomManager):
         #room.message("Come here " + args + " !")
         self.setTimeout(1, room.message, "*Rapes " + args + " .*")
 
+      elif cmd == "yt":
+        if (args.isspace() or args == ""):
+          room.message("Please enter in a search parameter!")
+        else:
+          args = args.replace(" ", "+")
+          room.message("@" + user.name + " https://www.youtube.com/results?search_query=" + args)
+
+      elif cmd == "google":
+        if (args.isspace() or args == ""):
+          room.message("Please enter in a search parameter!")
+        else:
+          args = args.replace(" ", "+")
+          room.message("@" + user.name + " https://www.google.com/search?site=&source=hp&q=" + args)
+
+      elif cmd == "hb":
+        if (args.isspace() or args == ""):
+          room.message("Please enter in a search parameter!")
+        else:
+          args = args.replace(" ", "%20")
+          room.message("@" + user.name + " http://hummingbird.me/search?query=" + args)
+
       else:
         room.message("I don't know that command!")
 
-      if long_c != 1: last_time = time.time()
-      else: long_c = 0;
+      if long_c != True: last_time = time.time()
+    else: long_c = False;
 
   def onFloodWarning(self, room):
     room.reconnect()
