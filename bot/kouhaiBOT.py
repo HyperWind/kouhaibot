@@ -141,8 +141,8 @@ class kouhai_bot(ch.RoomManager):
         room.message( "@" + random.choice(room.usernames) + " is a scrub.")
 
       elif cmd == "mods":
-        modlist = " ".join(room.modnames + [room.ownername])
-        room.message("Online mods:" + modlist)
+        # modlist = " ".join(room.modnames + [room.ownername])
+        room.message("Current chat mods: Dillonwastaken, fknjosh, hbAlty, hbBeardman, hbCybrox, hbNuck, hbRyn, Jojovonjo, Lyonface, MeganeconJim")# + modlist)
 
       elif cmd == "users":
         userlist= " ".join(room.usernames)
