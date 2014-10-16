@@ -1,0 +1,11 @@
+todo:
+
+embedding youtube videos,
+
+smarted google search with pygoogle,
+
+make the bot read the messages and replaces from a file.
+
+maybe:
+
+add more stuff into replace and messages
