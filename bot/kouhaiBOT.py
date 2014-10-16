@@ -12,19 +12,11 @@ if sys.version_info[0] > 2:
 else:
   import urllib2 as urlreq
 
-replace = {
-  "adult japanese visual novels": "HENTAI GAMES",
-  "people die if they are killed": "the archer class really is made up of archers",
-  "fuck": "hug",
-  "rape": "hug",
-  "huging": "hugging",
-  "shit": "dirt",
-  "faggot": "strange person",
-  "fag": "strange person",
-  "feg": "strange person",
-  "fagget": "strange person",
-  "cum": "icing",
-  "(-;": "ಠ_ಠ"
+ans = {
+  "adult japanese visual novels": "HENTAI GAMES!!",
+  "people die if they are killed": "The archer class really is made up of archers...",
+  "(-;": "ಠ_ಠ No.",
+  "@kouhaibot": "Yes? :3",
 }
 
 messages = {
@@ -150,6 +142,12 @@ class kouhai_bot(ch.RoomManager):
 
     if self.user == user: return
 
+    if time.time() - last_time > 2:
+      for key in ans:
+        if key in message.body.lower():
+          self.setTimeout(2, room.message, "@" + user.name + " " + ans[key])
+          break
+
     if (message.body[0] == "/" and time.time() - last_time > 2):   ##Here is the Prefix part
       data = message.body[1:].split(" ", 1)
       if len(data) > 1:
@@ -161,12 +159,7 @@ class kouhai_bot(ch.RoomManager):
 
       if args == "me": args = "@" + user.name
 
-      if cmd == "say":
-        for key in replace:
-          args = args.replace(key, replace[key])
-        room.message(args)
-
-      elif cmd == "scrub":
+      if cmd == "scrub":
         room.message( "@" + random.choice(room.usernames) + " is a scrub.")
 
       elif cmd == "mods":
@@ -197,7 +190,12 @@ class kouhai_bot(ch.RoomManager):
         self.setTimeout(2, room.message, "*" + messages["flips"][randint(0, len(messages["flips"])-1)] + "*")
 
       elif cmd == "baka":
-        room.message(" No, you are @" + user.name + ".")
+        if (args == "" or args == "@kouhaiBOT" or args.isspace()):
+          room.message(" No, you are @" + user.name + ".")
+        elif args.lower() == "@" + user.name:
+          room.message(" Dude, you just called yourself an idiot...")
+        else:
+          room.message(" " + args + "! @" + user.name + " just called you an idiot!")
 
       elif cmd == "intro":
         room.message(" Konnichiwa! Watashi wa KouhaiBOT (v1.0) desu. And I'm a chatango chat bot!")
@@ -219,7 +217,7 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "commands":
         room.message("> /weeaboo (arg), /hug (arg), /rape (arg), /tsundere (arg), /yt (arg), /google (arg), /hb (arg), /kill (arg)" +
-                      ", /yandere (arg), /true? (arg), /insult (arg), /notice, /roll, /users, /intro, /flip, /baka, /lewd, /dance, " +
+                      ", /yandere (arg), /true? (arg), /baka (arg), /insult (arg), /notice, /roll, /users, /intro, /flip, /lewd, /dance, " +
                       "/roulette, /scrub, /mods, /commands, /cookie. <")
 
       elif cmd == "roulette":
@@ -271,14 +269,22 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "roll":
         roll = randint(1, 100)
-        if roll > b_roll:
-          room.message("Congratz! You rolled a " + str(roll) + ", that's higher than the last roller (" + str(b_roll) + ", @" + b_roller + ")!")
-          b_roll, b_roller = roll, user.name
-        elif roll == 100:
+
+        if roll == 100:
           room.message("@" + user.name + " rolled a hundred! Woo!")
           b_roll, b_roller = 1, "kouhaiBOT"
+        elif roll == 69:
+            room.message("You rolled a 69. ‎( ͡° ͜ʖ ͡°)")
+            if roll > b_roll:
+              b_roll, b_roller = roll, user.name
+        elif roll > b_roll:
+          room.message("Congratz! You rolled a " + str(roll) + ", that's higher than the last highest roller (" + str(b_roll) + ", " + b_roller + ")!")
+          b_roll, b_roller = roll, user.name
+        elif roll == b_roll:
+          room.message("You rolled a " + str(roll) + " that's the same as the last highest roller (" + str(b_roll) + ", " + b_roller + ")!")
+          b_roll, b_roller = roll, user.name
         else:
-          room.message("You rolled a " + str(roll) + ", that's lower than the last roller (" + str(b_roll) + ", @" + b_roller + "), better luck next time!")
+          room.message("You rolled a " + str(roll) + ", that's lower than the last highest roller (" + str(b_roll) + ", " + b_roller + "), better luck next time!")
 
       else:
         room.message("I don't know that command!")
