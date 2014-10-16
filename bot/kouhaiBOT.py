@@ -12,13 +12,6 @@ if sys.version_info[0] > 2:
 else:
   import urllib2 as urlreq
 
-  """
-  todo:
-  --
-  maybe:
-  Make the bot replace all outgoing swearwords with cuter alternatives
-
-  """
 replace = {
   "adult japanese visual novels": "HENTAI GAMES",
   "people die if they are killed": "the archer class really is made up of archers",
