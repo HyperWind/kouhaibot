@@ -19,17 +19,32 @@ else:
   Make the bot replace all outgoing swearwords with cuter alternatives
 
   """
+replace = {
+  "adult japanese visual novels": "HENTAI GAMES",
+  "people die if they are killed": "the archer class really is made up of archers",
+  "fuck": "hug",
+  "rape": "hug",
+  "huging": "hugging",
+  "shit": "dirt",
+  "faggot": "strange person",
+  "fag": "strange person",
+  "feg": "strange person",
+  "fagget": "strange person",
+  "cum": "icing",
+  "(-;": "ಠ_ಠ"
+}
+
 messages = {
 
   "killme": [
     "Stabs @ in the eye.",
-    "Bites @ 's arm off.",
-    "Goes full on tsundere on @ .",
-    "Shoots an arrow in @ 's knee.",
+    "Bites @'s arm off.",
+    "Goes full on tsundere on @.",
+    "Shoots an arrow in @'s knee.",
     "Shoots @ in the foot.",
-    "Makes a hamburger out of @ .",
+    "Makes a hamburger out of @.",
     "Makes @ learn x86 Assembler.",
-    "Eats @ 's heart."
+    "Eats @'s heart."
   ],
 
   "dancemoves": [
@@ -62,22 +77,22 @@ messages = {
 
   "yandere": [
     " Oh @ where are you?",
-    " @ , come out~!",
-    " @ , I want to play with you...",
-    " You are the only one I love @ .",
-    " I want only you @ .",
-    " My love for you is infinate @ .",
-    " Please, why don't you love me @ ?"
+    " @, come out~!",
+    " @, I want to play with you...",
+    " You are the only one I love @.",
+    " I want only you @.",
+    " My love for you is infinate @.",
+    " Please, why don't you love me @?"
   ],
 
   "tsundere": [
     " Baka! @",
-    " It's not like I like you or anything @ ...",
+    " It's not like I like you or anything @...",
     " Hmpf... @",
-    " I hate you @ !",
-    " Get away @ !",
-    " Piss off @ !",
-    " I don't like you @ !"
+    " I hate you @!",
+    " Get away @!",
+    " Piss off @!",
+    " I don't like you @!"
   ],
 
   "insults": [
@@ -85,10 +100,10 @@ messages = {
     " If @ was in an eroge, their face would be censored.",
     " I would rather eat a bug than look at @ 's face.",
     " Even Kirito-kun wouldn't accept @ into his harem.",
-    " I once saw @ 's face, now I'm blind.",
+    " I once saw @'s face, now I'm blind.",
     " @ is a baka gaijin!",
     " @ is so boring that I'd rather watch Vampire Knight than talk to them.",
-    " @ 's mama is so fat, she even has her own gravity field.",
+    " @'s mama is so fat, she even has her own gravity field.",
     " Captain Earth makes more sense than @.",
     " @ enjoyed Boku no Pico way too much.",
     " @ has such shit taste that they have Mars of Destruction on their favorites list."
@@ -104,8 +119,10 @@ messages = {
 }
 
 last_time = 0
+b_roll, b_roller = 1, "kouhaiBOT"
 
 class kouhai_bot(ch.RoomManager):
+
   def onInit(self):
     self.setNameColor("F9F")
     self.setFontColor("F33")
@@ -134,7 +151,7 @@ class kouhai_bot(ch.RoomManager):
 
     long_c = False
 
-    global last_time
+    global b_roll, b_roller, last_time
 
     print(user.name, self.RNA(message.body), "Spam filter: ", time.time() - last_time)
 
@@ -152,10 +169,9 @@ class kouhai_bot(ch.RoomManager):
       if args == "me": args = "@" + user.name
 
       if cmd == "say":
-        if args == "adult japanese visual novels":
-          room.message("HENTAI GAMES!")
-        else:
-          room.message(args)
+        for key in replace:
+          args = args.replace(key, replace[key])
+        room.message(args)
 
       elif cmd == "scrub":
         room.message( "@" + random.choice(room.usernames) + " is a scrub.")
@@ -188,7 +204,7 @@ class kouhai_bot(ch.RoomManager):
         self.setTimeout(2, room.message, "*" + messages["flips"][randint(0, len(messages["flips"])-1)] + "*")
 
       elif cmd == "baka":
-        room.message(" No, you are @" + user.name + " .")
+        room.message(" No, you are @" + user.name + ".")
 
       elif cmd == "intro":
         room.message(" Konnichiwa! Watashi wa KouhaiBOT (v1.0) desu. And I'm a chatango chat bot!")
@@ -209,7 +225,9 @@ class kouhai_bot(ch.RoomManager):
         room.message(" https://www.youtube.com/watch?v=TBfWKmRFTjM This song discribes you pretty accurately " + args + " .")
 
       elif cmd == "commands":
-        room.message("> /weeaboo (arg), /rape (arg), /tsundere (arg), /yt (arg), /google (arg), /hb (arg), /kill (arg), /yandere (arg), /true? (arg), /insult (arg), /notice, /users, /intro, /flip, /baka, /lewd, /dance, /roulette, /scrub, /mods, /commands, /cookie. <")
+        room.message("> /weeaboo (arg), /hug (arg), /rape (arg), /tsundere (arg), /yt (arg), /google (arg), /hb (arg), /kill (arg)" +
+                      ", /yandere (arg), /true? (arg), /insult (arg), /notice, /roll, /users, /intro, /flip, /baka, /lewd, /dance, " +
+                      "/roulette, /scrub, /mods, /commands, /cookie. <")
 
       elif cmd == "roulette":
         if randint(1, 100) < 25:
@@ -229,7 +247,7 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "rape":
         #room.message("Come here " + args + " !")
-        self.setTimeout(1, room.message, "*Rapes " + args + " .*")
+        self.setTimeout(1, room.message, "*Rapes " + args + ".*")
 
       elif cmd == "yt":
         if (args.isspace() or args == ""):
@@ -251,6 +269,23 @@ class kouhai_bot(ch.RoomManager):
         else:
           args = args.replace(" ", "%20")
           room.message("@" + user.name + " http://hummingbird.me/search?query=" + args)
+
+      elif cmd == "hug":
+        if (args.isspace() or args == ""):
+          room.message("*Hugs @" + user.name + ".*")
+        else:
+          room.message("*Hugs " + args + ".*")
+
+      elif cmd == "roll":
+        roll = randint(1, 100)
+        if roll > b_roll:
+          room.message("Congratz! You rolled a " + str(roll) + ", that's higher than the last roller (" + str(b_roll) + ", @" + b_roller + ")!")
+          b_roll, b_roller = roll, user.name
+        elif roll == 100:
+          room.message("@" + user.name + " rolled a hundred! Woo!")
+          b_roll, b_roller = 1, "kouhaiBOT"
+        else:
+          room.message("You rolled a " + str(roll) + ", that's lower than the last roller (" + str(b_roll) + ", @" + b_roller + "), better luck next time!")
 
       else:
         room.message("I don't know that command!")
