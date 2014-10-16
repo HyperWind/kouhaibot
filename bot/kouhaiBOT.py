@@ -6,6 +6,7 @@ from random import randint
 import random
 import sys
 import re
+import uu
 if sys.version_info[0] > 2:
   import urllib.request as urlreq
 else:
@@ -127,13 +128,15 @@ class kouhai_bot(ch.RoomManager):
     message = messages[responses][randint(0, len(messages[responses])-1)].split("@")
     return message[0] + name + message[1]
 
+  def RNA(self, s): return "".join(i for i in s if ord(i)<128) #Remove Non Ascii
+
   def onMessage(self, room, user, message):
 
     long_c = False
 
     global last_time
 
-    print(user.name, message.body, "Spam filter: ", time.time() - last_time)
+    print(user.name, self.RNA(message.body), "Spam filter: ", time.time() - last_time)
 
     if self.user == user: return
 
@@ -268,6 +271,6 @@ class kouhai_bot(ch.RoomManager):
     print("users: " + str(room.usercount))
 
   def onMessageDelete(self, room, user, msg):
-    print("MESSAGE DELETED: " + user.name + ": " + msg.body)
+    print("MESSAGE DELETED: " + user.name + ": " + self.RNA(msg.body))
 
 if __name__ == "__main__": kouhai_bot.easy_start()
