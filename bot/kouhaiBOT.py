@@ -16,7 +16,6 @@ ans = {
   "adult japanese visual novels": "HENTAI GAMES!!",
   "people die if they are killed": "The archer class really is made up of archers...",
   "(-;": "ಠ_ಠ No.",
-  "@kouhaibot": "Yes? :3",
 }
 
 messages = {
@@ -30,13 +29,6 @@ messages = {
     "Makes a hamburger out of @.",
     "Makes @ learn x86 Assembler.",
     "Eats @'s heart."
-  ],
-
-  "dancemoves": [
-    "(>^.^)>",
-    "(v^.^)v",
-    "v(^.^v)",
-    "<(^.^<)"
   ],
 
   "flips": [
@@ -92,13 +84,6 @@ messages = {
     " Captain Earth makes more sense than @.",
     " @ enjoyed Boku no Pico way too much.",
     " @ has such shit taste that they have Mars of Destruction on their favorites list."
-  ],
-
-  "lewd": [
-    " S-sempai, what are you doing? Why are you holding me like that?",
-    " No, s-sempai, please, s-stop...No, d-don't remove that s-sempai...",
-    " What are you doing s-sempai, why are you putting it in there?",
-    " S-SEMPAI!!! HNNNNNNGGGG!! S-ssem-mpai..."
   ]
 
 }
@@ -170,18 +155,6 @@ class kouhai_bot(ch.RoomManager):
         userlist= " ".join(room.usernames)
         room.message("Online users: " + userlist)
 
-      elif cmd == "dance":
-        last_time = time.time() + 8
-        long_c = True
-        for msg in range(0, len(messages["dancemoves"])):
-          self.setTimeout(msg * 2, room.message, messages["dancemoves"][msg])
-
-      elif cmd == "lewd":
-        last_time = time.time() + 8
-        long_c = True
-        for msg in range(0, len(messages["lewd"])):
-          self.setTimeout(msg * 2, room.message, messages["lewd"][msg])
-
       elif cmd == "insult":
         room.message(self.getMessage("insults", args))
 
@@ -217,7 +190,7 @@ class kouhai_bot(ch.RoomManager):
 
       elif cmd == "commands":
         room.message("> /weeaboo (arg), /hug (arg), /rape (arg), /tsundere (arg), /yt (arg), /google (arg), /hb (arg), /kill (arg)" +
-                      ", /yandere (arg), /true? (arg), /baka (arg), /insult (arg), /notice, /roll, /users, /intro, /flip, /lewd, /dance, " +
+                      ", /yandere (arg), /true? (arg), /baka (arg), /insult (arg), /notice, /roll, /users, /intro, /flip, " +
                       "/roulette, /scrub, /mods, /commands, /cookie. <")
 
       elif cmd == "roulette":
